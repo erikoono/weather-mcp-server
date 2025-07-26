@@ -13,7 +13,11 @@ const createTestApp = () => {
   app.use(cors());
   app.use(express.json());
 
-  const weatherService = new MockedWeatherService();
+  // モックされたWeatherServiceのインスタンスを作成
+  const mockWeatherService = {
+    getCurrentWeather: jest.fn(),
+    getWeatherForecast: jest.fn(),
+  };
 
   // ルート
   app.get('/', (req, res) => {
@@ -34,7 +38,7 @@ const createTestApp = () => {
       const { city } = req.params;
       const { country = 'JP' } = req.query;
 
-      const weatherData = await weatherService.getCurrentWeather(city, country as string);
+      const weatherData = await mockWeatherService.getCurrentWeather(city, country as string);
 
       res.json({
         success: true,
@@ -54,7 +58,7 @@ const createTestApp = () => {
       const { city } = req.params;
       const { country = 'JP', days = '5' } = req.query;
 
-      const forecastData = await weatherService.getWeatherForecast(
+      const forecastData = await mockWeatherService.getWeatherForecast(
         city,
         country as string,
         parseInt(days as string)
@@ -77,11 +81,17 @@ const createTestApp = () => {
 
 describe('Weather API Endpoints', () => {
   let app: express.Application;
-  let mockWeatherService: jest.Mocked<WeatherService>;
+  let mockWeatherService: any;
 
   beforeEach(() => {
     app = createTestApp();
-    mockWeatherService = new MockedWeatherService() as jest.Mocked<WeatherService>;
+    // モック関数を取得
+    const WeatherServiceMock = require('../../src/services/weather').WeatherService;
+    mockWeatherService = {
+      getCurrentWeather: jest.fn(),
+      getWeatherForecast: jest.fn(),
+    };
+    WeatherServiceMock.mockImplementation(() => mockWeatherService);
   });
 
   afterEach(() => {
