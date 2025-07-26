@@ -76,7 +76,4 @@ app.listen(port, () => {
 });
 
 // テスト用にappをエクスポート
-export { app };
-
-// CommonJS形式でもエクスポート
-module.exports = { app }; 
+export { app }; 
