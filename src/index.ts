@@ -73,4 +73,7 @@ app.get('/weather/:city/forecast', async (req, res) => {
 app.listen(port, () => {
   console.log(`🌤️ 天気情報APIサーバーが起動しました: http://localhost:${port}`);
   console.log(`📖 APIドキュメント: http://localhost:${port}`);
-}); 
+});
+
+// テスト用にappをエクスポート
+export { app }; 
