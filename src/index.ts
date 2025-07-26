@@ -1,81 +1,76 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
+import express from 'express';
+import cors from 'cors';
 import { WeatherService } from './services/weather.js';
 
-async function main() {
-  const server = new Server(
-    {
-      name: 'weather-mcp-server',
-      version: '1.0.0',
+const app = express();
+const port = process.env.PORT || 3000;
+
+// ミドルウェア
+app.use(cors());
+app.use(express.json());
+
+// 天気情報サービス
+const weatherService = new WeatherService();
+
+// ルート
+app.get('/', (req, res) => {
+  res.json({
+    name: 'weather-mcp-server',
+    version: '1.0.0',
+    description: '天気情報を提供するAPIサーバー',
+    endpoints: {
+      '/weather/:city': '指定された都市の現在の天気情報を取得',
+      '/weather/:city/forecast': '指定された都市の天気予報を取得',
     },
-    {
-      capabilities: {
-        tools: {},
-        resources: {},
-      },
-    }
-  );
+  });
+});
 
-  const weatherService = new WeatherService();
+// 現在の天気情報を取得
+app.get('/weather/:city', async (req, res) => {
+  try {
+    const { city } = req.params;
+    const { country = 'JP' } = req.query;
+    
+    const weatherData = await weatherService.getCurrentWeather(city, country as string);
+    
+    res.json({
+      success: true,
+      data: weatherData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : '不明なエラー',
+    });
+  }
+});
 
-  // 天気情報ツールを登録
-  server.setRequestHandler(
-    {
-      name: 'get_weather',
-      description: '指定された都市の現在の天気情報を取得します',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          city: {
-            type: 'string',
-            description: '天気を取得したい都市名（例: Tokyo, Osaka, Kyoto）',
-          },
-          country: {
-            type: 'string',
-            description: '国コード（例: JP, US, UK）',
-            default: 'JP',
-          },
-        },
-        required: ['city'],
-      },
-    },
-    async (request) => {
-      const { city, country = 'JP' } = request.arguments as { city: string; country?: string };
-      
-      try {
-        const weatherData = await weatherService.getCurrentWeather(city, country);
-        
-        const weatherInfo = `
-🌤️ **${city}の天気情報**
+// 天気予報を取得
+app.get('/weather/:city/forecast', async (req, res) => {
+  try {
+    const { city } = req.params;
+    const { country = 'JP', days = '5' } = req.query;
+    
+    const forecastData = await weatherService.getWeatherForecast(
+      city, 
+      country as string, 
+      parseInt(days as string)
+    );
+    
+    res.json({
+      success: true,
+      data: forecastData,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : '不明なエラー',
+    });
+  }
+});
 
-🌡️ **気温**: ${weatherData.temperature}°C
-🌡️ **体感温度**: ${weatherData.feelsLike}°C
-💧 **湿度**: ${weatherData.humidity}%
-🌬️ **風速**: ${weatherData.windSpeed} m/s
-☁️ **天気**: ${weatherData.description}
-👁️ **視界**: ${weatherData.visibility} km
-🌅 **気圧**: ${weatherData.pressure} hPa
-
-最終更新: ${new Date().toLocaleString('ja-JP')}
-        `.trim();
-
-        return {
-          content: [{ type: 'text', text: weatherInfo }],
-        };
-      } catch (error) {
-        return {
-          content: [{ 
-            type: 'text', 
-            text: `❌ エラー: ${city}の天気情報を取得できませんでした。${error instanceof Error ? error.message : '不明なエラー'}` 
-          }],
-        };
-      }
-    }
-  );
-
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('天気情報MCPサーバーが起動しました');
-}
-
-main().catch(console.error); 
+// サーバー起動
+app.listen(port, () => {
+  console.log(`🌤️ 天気情報APIサーバーが起動しました: http://localhost:${port}`);
+  console.log(`📖 APIドキュメント: http://localhost:${port}`);
+}); 
