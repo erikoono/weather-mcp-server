@@ -17,6 +17,9 @@
     "type-check": "tsc --noEmit",
     "vercel-build": "npm run build"
   },
+  "engines": {
+    "node": ">=16.0.0"
+  },
   "keywords": [
     "mcp",
     "weather",
