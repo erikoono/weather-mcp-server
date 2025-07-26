@@ -17,4 +17,4 @@ tests
 .github
 .cursorrules
 jest.config.js
-tsconfig.json 
+# tsconfig.json はビルドに必要なので除外しない 
