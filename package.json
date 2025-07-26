@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "天気情報を提供するMCPサーバー",
   "main": "dist/index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",

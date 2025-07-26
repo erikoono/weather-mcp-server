@@ -79,6 +79,4 @@ app.listen(port, () => {
 export { app };
 
 // CommonJS形式でもエクスポート
-if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { app };
-} 
+module.exports = { app }; 
