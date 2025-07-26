@@ -3,9 +3,9 @@ FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-# 依存関係をコピー
+# 依存関係をコピー（devDependenciesも含む）
 COPY package*.json ./
-RUN npm ci --only=production
+RUN npm ci
 
 # ソースコードをコピー
 COPY . .
