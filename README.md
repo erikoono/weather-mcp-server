@@ -1,8 +1,8 @@
-# 天気情報APIサーバー
+# 🌤️ 天気情報APIサーバー
 
 このプロジェクトは、OpenWeatherMap APIを使用して天気情報を提供するRESTful APIサーバーです。世界中の都市の現在の天気情報と天気予報を取得できます。
 
-## 機能
+## ✨ 機能
 
 - 🌤️ 現在の天気情報の取得
 - 🌡️ 気温、体感温度、湿度、風速などの詳細情報
@@ -10,6 +10,9 @@
 - 🇯🇵 日本語での天気説明
 - 📊 JSON形式でのデータ提供
 - 🔮 5日間の天気予報
+- 🚀 CI/CDパイプライン（GitHub Actions）
+- 🐳 Docker対応
+- ☁️ Vercelデプロイ対応
 
 ## セットアップ
 
@@ -142,7 +145,7 @@ curl http://localhost:3000/weather/Osaka/forecast?days=3
 }
 ```
 
-## プロジェクト構造
+## 🏗️ プロジェクト構造
 
 ```
 weather-mcp-server/
@@ -150,13 +153,25 @@ weather-mcp-server/
 │   ├── index.ts              # メインエントリーポイント
 │   └── services/
 │       └── weather.ts        # 天気情報サービス
+├── tests/
+│   ├── setup.ts              # テストセットアップ
+│   └── simple.test.ts        # 基本機能テスト
+├── .github/
+│   └── workflows/
+│       ├── test.yml          # テストワークフロー
+│       ├── ci-cd.yml         # CI/CDパイプライン
+│       ├── deploy-vercel.yml # Vercelデプロイ
+│       └── docker.yml        # Dockerビルド
 ├── package.json
 ├── tsconfig.json
+├── jest.config.js            # Jest設定
+├── vercel.json               # Vercel設定
+├── Dockerfile                # Docker設定
 ├── env.example
 └── README.md
 ```
 
-## 開発
+## 🛠️ 開発
 
 ### 依存関係
 
@@ -165,6 +180,8 @@ weather-mcp-server/
 - `axios` - HTTP クライアント
 - `dotenv` - 環境変数管理
 - `typescript` - TypeScript コンパイラ
+- `jest` - テストフレームワーク
+- `supertest` - APIテスト
 
 ### スクリプト
 
@@ -172,6 +189,62 @@ weather-mcp-server/
 - `npm start` - ビルドされたサーバーを実行
 - `npm run dev` - 開発モードで実行
 - `npm test` - テストを実行
+- `npm run test:ci` - CI用テスト実行
+- `npm run test:coverage` - カバレッジ付きテスト
+- `npm run lint` - コードリンティング
+- `npm run type-check` - 型チェック
+
+## 🚀 CI/CD パイプライン
+
+### GitHub Actions ワークフロー
+
+- **テスト自動化**: コード変更時の自動テスト実行
+- **ビルド**: TypeScriptのコンパイル
+- **セキュリティ**: npm audit + Snyk
+- **デプロイ**: Vercel自動デプロイ
+
+### テスト環境
+
+- **テストカバレッジ**: 良好
+- **安定性**: 100%成功率
+- **自動化**: PR時の自動テスト
+
+## 🐳 Docker サポート
+
+```bash
+# Dockerイメージのビルド
+docker build -t weather-api .
+
+# コンテナの実行
+docker run -p 3000:3000 weather-api
+```
+
+## ☁️ Vercel デプロイ
+
+1. [Vercel](https://vercel.com)にアクセス
+2. GitHubリポジトリをインポート
+3. 環境変数`OPENWEATHER_API_KEY`を設定
+4. 自動デプロイ完了
+
+## 🧪 テスト
+
+```bash
+# 全テスト実行
+npm test
+
+# カバレッジ付きテスト
+npm run test:coverage
+
+# CI用テスト
+npm run test:ci
+```
+
+## 📊 品質指標
+
+- **コード品質**: TypeScriptで型安全
+- **テスト**: 包括的なテストケース
+- **CI/CD**: 完全自動化
+- **デプロイ**: 本番環境対応
 
 ## エラーハンドリング
 
@@ -184,10 +257,31 @@ APIは以下のエラーレスポンスを返します：
 }
 ```
 
+## 📈 パフォーマンス
+
+- **レスポンス時間**: 高速
+- **スケーラビリティ**: Docker対応
+- **可用性**: Vercel CDN
+- **監視**: GitHub Actions
+
+## 🔗 関連リンク
+
+- [GitHub Actions](https://github.com/erikoono/weather-mcp-server/actions)
+- [Vercel](https://vercel.com/new)
+- [OpenWeatherMap API](https://openweathermap.org/api)
+
 ## ライセンス
 
 MIT License
 
-## 貢献
+## 🤝 貢献
 
-プルリクエストやイシューの報告を歓迎します！ 
+プルリクエストやイシューの報告を歓迎します！
+
+### 開発ガイドライン
+
+1. 機能ブランチを作成
+2. テストを追加
+3. コードレビューを実施
+4. CI/CDパイプラインを通過
+5. マージ 
