@@ -1,4 +1,4 @@
-import { WeatherService, WeatherData } from '../../src/services/weather.js';
+import { WeatherService, WeatherData } from '../../src/services/weather';
 import axios from 'axios';
 
 // axiosのモック

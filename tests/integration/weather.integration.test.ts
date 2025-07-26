@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { createServer } from 'http';
-import { app } from '../../src/index.js';
+import { app } from '../../src/index';
 
 // テスト用のサーバーを作成
 const server = createServer(app);

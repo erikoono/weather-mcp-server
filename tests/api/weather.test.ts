@@ -1,10 +1,10 @@
 import request from 'supertest';
 import express from 'express';
 import cors from 'cors';
-import { WeatherService } from '../../src/services/weather.js';
+import { WeatherService } from '../../src/services/weather';
 
 // WeatherServiceのモック
-jest.mock('../../src/services/weather.js');
+jest.mock('../../src/services/weather');
 const MockedWeatherService = WeatherService as jest.MockedClass<typeof WeatherService>;
 
 // テスト用のExpressアプリを作成

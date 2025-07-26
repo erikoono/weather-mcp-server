@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { WeatherService } from './services/weather.js';
+import { WeatherService } from './services/weather';
 
 const app = express();
 const port = process.env.PORT || 3000;
