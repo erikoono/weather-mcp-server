@@ -1,0 +1,30 @@
+{
+  "name": "weather-mcp-server",
+  "version": "1.0.0",
+  "description": "天気情報を提供するMCPサーバー",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "jest"
+  },
+  "keywords": ["mcp", "weather", "天気", "server"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.4.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/express": "^4.17.21",
+    "@types/cors": "^2.8.17",
+    "typescript": "^5.3.0",
+    "tsx": "^4.6.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0"
+  }
+} 
