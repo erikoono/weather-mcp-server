@@ -7,8 +7,11 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 
+# 設定ファイルをコピー
+COPY tsconfig.json ./
+
 # ソースコードをコピー
-COPY . .
+COPY src/ ./src/
 
 # TypeScriptをビルド
 RUN npm run build
