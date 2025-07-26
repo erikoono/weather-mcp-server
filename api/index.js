@@ -1,4 +1,4 @@
-import { app } from '../src/index';
+const { app } = require('../src/index');
+
 // Vercel Functions用のエクスポート
-export default app;
-//# sourceMappingURL=index.js.map
+module.exports = app;
