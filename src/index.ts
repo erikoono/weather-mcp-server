@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { WeatherService } from './services/weather.js';
+import { WeatherService } from './services/weather';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -73,4 +73,7 @@ app.get('/weather/:city/forecast', async (req, res) => {
 app.listen(port, () => {
   console.log(`🌤️ 天気情報APIサーバーが起動しました: http://localhost:${port}`);
   console.log(`📖 APIドキュメント: http://localhost:${port}`);
-}); 
+});
+
+// テスト用にappをエクスポート
+export { app }; 

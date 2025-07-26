@@ -1,7 +1,7 @@
-# Weather MCP Server - Cursor Rules
+# 🌤️ Weather API Server - Cursor Rules
 
 ## プロジェクト概要
-このプロジェクトは、OpenWeatherMap APIを使用して天気情報を提供するMCPサーバーです。
+このプロジェクトは、OpenWeatherMap APIを使用して天気情報を提供するRESTful APIサーバーです。TypeScript + Express.jsで構築され、CI/CDパイプラインとDocker対応を備えています。
 
 ## コーディング規約
 
@@ -20,6 +20,16 @@ src/
 ├── types/                # 型定義
 ├── utils/                # ユーティリティ関数
 └── config/               # 設定ファイル
+
+tests/
+├── setup.ts              # テストセットアップ
+└── simple.test.ts        # 基本機能テスト
+
+.github/workflows/
+├── test.yml              # テストワークフロー
+├── ci-cd.yml             # CI/CDパイプライン
+├── deploy-vercel.yml     # Vercelデプロイ
+└── docker.yml            # Dockerビルド
 ```
 
 ### 命名規則
@@ -54,6 +64,9 @@ src/
 - 重要な機能にはユニットテストを記述
 - モックを使用して外部APIをテスト
 - テストカバレッジを維持する
+- Jest + Supertestを使用
+- CI/CDでの自動テスト実行
+- テストファイルは`tests/`ディレクトリに配置
 
 ## コミット規約
 
@@ -119,27 +132,86 @@ docs(readme): セットアップ手順を更新
 - API仕様の詳細
 - 設定項目の説明
 
-## デプロイメント
+## 🚀 CI/CD パイプライン
+
+### GitHub Actions
+- **テスト自動化**: コード変更時の自動テスト実行
+- **ビルド**: TypeScriptのコンパイル
+- **セキュリティ**: npm audit + Snyk
+- **デプロイ**: Vercel自動デプロイ
+
+### ワークフロー
+- `test.yml`: 基本的なテスト実行
+- `ci-cd.yml`: 本格的なCI/CDパイプライン
+- `deploy-vercel.yml`: Vercelデプロイ
+- `docker.yml`: Dockerコンテナ化
+
+## 🐳 Docker サポート
+
+### コンテナ化
+- マルチステージビルド
+- 本番環境最適化
+- ヘルスチェック機能
+- 非rootユーザー実行
+
+## ☁️ デプロイメント
 
 ### 環境
 - 開発環境: localhost:3000
-- 本番環境: 適切なホスティングサービス
+- 本番環境: Vercel
+- コンテナ環境: Docker
 
 ### ビルド
 - TypeScriptのコンパイル
 - 依存関係のインストール
 - 環境変数の設定
+- Dockerイメージのビルド
 
-## トラブルシューティング
+## 🔧 トラブルシューティング
 
 ### よくある問題
 1. APIキーが設定されていない
 2. 依存関係のインストールエラー
 3. TypeScriptのコンパイルエラー
 4. 環境変数の読み込みエラー
+5. GitHub Actionsでのテスト失敗
+6. Dockerビルドエラー
+7. Vercelデプロイエラー
 
 ### 解決方法
 - .envファイルの確認
 - npm installの実行
 - TypeScriptの型チェック
-- 環境変数の設定確認 
+- 環境変数の設定確認
+- テストの実行と修正
+- Dockerイメージの再ビルド
+- Vercel設定の確認
+
+## 📊 品質管理
+
+### コード品質
+- TypeScriptの厳密な型チェック
+- ESLintによるコードスタイル統一
+- Prettierによるフォーマット統一
+
+### テスト品質
+- ユニットテストの網羅性
+- 統合テストの実装
+- テストカバレッジの維持
+
+### セキュリティ
+- 依存関係の脆弱性チェック
+- APIキーの適切な管理
+- 入力値の検証
+
+## 🎯 開発目標
+
+### 短期目標
+- テストカバレッジの向上
+- パフォーマンスの最適化
+- ドキュメントの充実
+
+### 長期目標
+- 機能拡張（キャッシュ、レート制限）
+- マイクロサービス化
+- 監視・ログ機能の強化 
